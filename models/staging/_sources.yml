@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: fitness_dataset
     description: ""
-    database: arcane-pillar-485809-b6
+    database: emilys-analytics
     schema: fitness_dataset
         
     tables:

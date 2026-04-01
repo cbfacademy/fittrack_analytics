@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: stg_membership_plans
+    description: Standardised staging model for membership plan. 
+
+    columns:
+      - name: membership_id
+        description: Primary key for the memebership record.
+        tests: 
+          - not_null
+          - unique 
+
+      - name: member_id
+        description: ID of the member. 
+        tests: 
+          - not_null
+      
+      - name: plan_type
+        description: Standardised membership plan type.
+        tests: 
+          - not_null
+          - accepted_values: 
+              arguments: 
+                values: ['basic', 'premium']
+
+      - name: monthly_price
+        description: Monthly price of the membership plan.
+        tests: 
+          - not_null
+
+      - name: is_active
+        description: Whether membership is currently active.
+        tests: 
+          - not_null
+
+      - name: start_date
+        description: Membership start date.
+        tests: 
+          - not_null
