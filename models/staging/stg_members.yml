@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: stg_members
+    description: "Staging model for members data with trimmed string fields, standardised membership status, and missing email flag."
+
+    columns:
+      - name: member_id
+        description: "Unique identifier for each member."
+        tests:
+          - not_null
+          - unique
+
+      - name: first_name
+        description: "Trimmed first name."
+
+      - name: last_name
+        description: "Trimmed last name."
+
+      - name: email
+        description: "Trimmed email address. Missing emails are preserved as null."
+
+      - name: missing_email_flag
+        description: "True when email is missing or blank."
+        tests:
+          - not_null
+
+      - name: membership_status
+        description: "Standardised membership status."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['active', 'inactive', 'unknown']
+
+      - name: date_of_birth
+        description: "Member date of birth."
+
+      - name: join_date
+        description: "Date the member joined."
+
+      - name: home_club
+        description: "Trimmed home club name."
