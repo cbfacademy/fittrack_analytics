@@ -1,0 +1,58 @@
+version: 2
+
+sources:
+  - name: fitness_dataset
+    description: ""
+    database: arcane-pillar-485809-b6
+    schema: fitness_dataset
+        
+    tables:
+      # --------------------------------------------------------
+      # bookings TABLE
+      # --------------------------------------------------------
+      - name: bookings
+        description: ""
+
+        
+      
+        
+
+      # --------------------------------------------------------
+      # class_categories TABLE
+      # --------------------------------------------------------
+      - name: class_categories
+        description: ""
+        
+      
+      # --------------------------------------------------------
+      # classes TABLE
+      # --------------------------------------------------------
+      - name: classes
+        description: "Customer data with Brazilian geography"
+        
+        
+      
+      # --------------------------------------------------------
+      # intructors TABLE
+      # --------------------------------------------------------
+      - name: intructors
+        description: "Product catalog with dimensions"
+        
+      
+      
+      # --------------------------------------------------------
+      # members TABLE
+      # --------------------------------------------------------
+      - name: members
+        description: "Portuguese to English category name mapping"
+        
+      
+
+
+      # --------------------------------------------------------
+      # membership_plans TABLE
+      # --------------------------------------------------------
+      - name: membership_plans
+        description: "Portuguese to English category name mapping"
+        
+    
