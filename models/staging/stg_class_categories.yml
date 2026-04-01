@@ -16,8 +16,14 @@ models:
         description: "each category written in words"
         tests:
           - not_null
+          - accepted_values:
+                values: ['fitness', 'combat', 'wellness', 'strength', 'muay thai', 'boxing', 'yoga', 'pilates', 'hiit', 'mobility']
 
       - name: category_level
         description: "how far a category is from the top node, as in source data"
         tests:
           - not_null
+          - accepted_values:
+                values: [1, 2, 3]
+                quote: false
+
