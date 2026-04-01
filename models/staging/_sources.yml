@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: fitness_dataset
     description: ""
-    database: arcane-pillar-485809-b6
+    database: rhys-project-485811
     schema: fitness_dataset
         
     tables:
@@ -12,10 +12,8 @@ sources:
       # --------------------------------------------------------
       - name: bookings
         description: ""
-
-        
       
-        
+      
 
       # --------------------------------------------------------
       # class_categories TABLE
@@ -33,10 +31,12 @@ sources:
         
       
       # --------------------------------------------------------
-      # intructors TABLE
+      # instructors TABLE
       # --------------------------------------------------------
-      - name: intructors
-        description: "Product catalog with dimensions"
+      - name: instructors
+        description: "Customer data with Brazilian geography"
+
+
         
       
       

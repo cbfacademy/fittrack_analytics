@@ -1,0 +1,32 @@
+version: 2
+
+models: 
+  - name: stg_instructors
+    description: "Standardised instructor data by formatting the dates, correcting the capitalisation in Specialities and trimming any white space." 
+    columns:
+      - name: instructor_id
+        description: "Instructor Primary Key."
+        tests:
+          - unique
+          - not_null
+
+      - name: instructor_name
+        description: "The instructor's full name."
+        tests:
+          - unique
+          - not_null 
+
+      - name: speciality
+        description: "The instructor's specialist class."
+        tests:
+          - not_null 
+
+      - name: club_location
+        description: "Where the instructor teaches."
+        tests:
+          - not_null
+
+      - name: hire_date
+        description: "When the instructor was hired"
+        tests:
+          - not_null
