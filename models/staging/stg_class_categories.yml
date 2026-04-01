@@ -12,18 +12,12 @@ models:
           - not_null
           - unique
 
-      - name: node_id
-        description: "node_id for each category (used in hierarchy)"
-        tests:
-          - not_null
-          - unique
-
       - name: category_name
-        description: "verbal name for each category"
+        description: "each category written in words"
         tests:
           - not_null
 
       - name: category_level
-        description: "distance from the top level node. top level starts at 1"
+        description: "how far a category is from the top node, as in source data"
         tests:
           - not_null
