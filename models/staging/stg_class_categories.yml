@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  # testing the main table
+  - name: stg_class_categories
+    description: "category_id is tied to each category name. a 3 level hierarchy is defined"
+
+    columns:
+      - name: category_id
+        description: "unique identifier for each category"
+        tests:
+          - not_null
+          - unique
+
+      - name: node_id
+        description: "node_id for each category (used in hierarchy)"
+        tests:
+          - not_null
+          - unique
+
+      - name: category_name
+        description: "verbal name for each category"
+        tests:
+          - not_null
+
+      - name: category_level
+        description: "distance from the top level node. top level starts at 1"
+        tests:
+          - not_null
