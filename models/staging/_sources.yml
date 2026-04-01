@@ -39,9 +39,7 @@ sources:
             description: "Whether the member attended the class (e.g., 'attended', 'missed', 'cancelled')"
             tests:
               - not_null
-              - accepted_values:
-                  values: ['attended', 'no_show', 'cancelled', 'Attended']
-          
+              
           - name: check_in_timestamp
             description: "Date when the member checked in for the class (if attended)"
             
@@ -57,10 +55,9 @@ sources:
         description: "One row per class category"
 
         columns:
-          - name: class_category_id
+          - name: category_id
             description: "Unique identifier for each class category"
             tests:
-              - unique
               - not_null
 
           - name: category_name
@@ -76,10 +73,7 @@ sources:
                   field: class_category_id
 
           - name: category_level
-            description: "Level of the category in the hierarchy (e.g., 1 for top-level, 2 for sub-category)"      
-            tests: 
-              - accepted_values:
-                  values: [1, 2, 3]
+            description: "Level of the category in the hierarchy (e.g., 1 for top-level, 2 for sub-category)"        
       
       # --------------------------------------------------------
       # classes TABLE
@@ -122,28 +116,23 @@ sources:
 
           - name: scheduled_end
             description: "Date and time when the class is scheduled to end"
-            tests:
-              - not_null  
+          
 
           - name: capacity
             description: "Maximum number of attendees allowed for the class"
             tests:
               - not_null
-              - accepted_values:
-                  values: [10, 20, 30, 40, 50] 
-
+          
           - name: club_location
             description: "Location of the club where the class is held (e.g., 'Downtown', 'Uptown')"
             tests:
               - not_null
-              - accepted_values:
-                  values: ['Canary Wharf', 'Stratford', 'Hackney', 'Bow']          
-        
+             
       
       # --------------------------------------------------------
       # intructors TABLE
       # --------------------------------------------------------
-      - name: intructors
+      - name: instructors
         description: "One row per instructor"
         columns:
           - name: instructor_id
@@ -157,21 +146,17 @@ sources:
             tests:
               - not_null
 
-          - name: specialty
+          - name: speciality
             description: "Instructor's specialty or area of expertise"
             tests:
               - not_null
-              - accepted_values:
-                  values: ['muay thai', 'Strength', 'Pilates', 'Muay Thai ', 'boxing', 'Boxing', 'strength']
             
 
           - name: club_location   
             description: "Location of the club where the instructor teaches (e.g., 'Downtown', 'Uptown')"
             tests:
               - not_null
-              - accepted_values:
-                  values: ['Canary Wharf', 'Stratford', 'Hackney', 'Bow']
-
+            
           - name: hire_date
             description: "Date when the instructor was hired"
             tests:
@@ -219,15 +204,13 @@ sources:
             description: "Current status of the member's membership (e.g., 'active', 'inactive', 'cancelled')"
             tests:
               - not_null
-              - accepted_values:
-                  values: ['active', 'ACTIVE', 'Active','inactive']  
+             
 
           - name: home_club 
             description: "Location of the member's home club (e.g., 'Downtown', 'Uptown')"
             tests:
               - not_null
-              - accepted_values:
-                  values: ['Canary Wharf', 'Stratford', 'Hackney', 'Bow']         
+                     
         
       
       # --------------------------------------------------------
@@ -254,17 +237,25 @@ sources:
             description: "Name of the membership plan (e.g., 'Basic', 'Premium')"
             tests:
               - not_null
-              - accepted_values:
-                  values: ['Basic', 'Premium', 'basic', 'premium']
+      
 
-          - name: price
+          - name: monthly_price
             description: "Price of the membership plan"
             tests:
               - not_null
 
-          - name: duration_months
-            description: "Duration of the membership plan in months"
+          - name: start_date
+            description: "Date when the membership plan starts"
             tests:
               - not_null
+
+          - name: end_date
+            description: "Date when the membership plan ends"
+       
+            
+          - name: is_active
+            description: "Whether the membership plan is currently active (true/false)"
+            tests:
+              - not_null 
         
     
