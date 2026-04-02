@@ -11,48 +11,251 @@ sources:
       # bookings TABLE
       # --------------------------------------------------------
       - name: bookings
-        description: ""
+        description: "One row per booking_id"
 
-        
-      
+        columns:
+          - name: booking_id
+            description: "Unique identifier for each booking"
+            tests:
+              - unique
+              - not_null
+          
+          - name: member_id
+            description: "Unique identifier for each member"
+            tests:
+              - not_null
+
+          - name: class_id
+            description: "Unique identifier for each class"
+            tests:
+              - not_null
+          
+          - name: booking_timestamp
+            description: "Date when the booking was made"
+            tests:
+              - not_null
+
+          - name: attendance_status
+            description: "Whether the member attended the class (e.g., 'attended', 'missed', 'cancelled')"
+            tests:
+              - not_null
+              
+          - name: check_in_timestamp
+            description: "Date when the member checked in for the class (if attended)"
+            
+          - name: cancellation_timestamp
+            description: "Date when the booking was cancelled (if cancelled)"
+            
         
 
       # --------------------------------------------------------
       # class_categories TABLE
       # --------------------------------------------------------
       - name: class_categories
-        description: ""
-        
+        description: "One row per class category"
+
+        columns:
+          - name: category_id
+            description: "Unique identifier for each class category"
+            tests:
+              - not_null
+
+          - name: category_name
+            description: "Name of the class category (e.g., 'Yoga', 'Spin', 'Pilates')"
+            tests:
+              - not_null
+
+          - name: parent_category_id
+            description: "Identifier for the parent category (if applicable, otherwise null)"
+            tests:
+              - relationships:
+                  to: ref('class_categories')
+                  field: class_category_id
+
+          - name: category_level
+            description: "Level of the category in the hierarchy (e.g., 1 for top-level, 2 for sub-category)"        
       
       # --------------------------------------------------------
       # classes TABLE
       # --------------------------------------------------------
       - name: classes
-        description: "Customer data with Brazilian geography"
+        description: "One row class_id"
         
-        
+        columns:
+          - name: class_id
+            description: "Unique identifier for each class"
+            tests:
+              - unique
+              - not_null
+
+          - name: class_name
+            description: "Name of the class (e.g., 'Morning Yoga', 'Evening Spin')"
+            tests:
+              - not_null
+
+          - name: category_id
+            description: "Identifier for the category of the class (foreign key to class_categories)"
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('class_categories')
+                  field: category_id
+
+          - name: instructor_id
+            description: "Identifier for the instructor teaching the class (foreign key to instructors)"
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('instructors')
+                  field: instructor_id
+
+          - name: scheduled_start
+            description: "Date and time when the class is scheduled to take place"
+            tests:
+              - not_null
+
+          - name: scheduled_end
+            description: "Date and time when the class is scheduled to end"
+          
+
+          - name: capacity
+            description: "Maximum number of attendees allowed for the class"
+            tests:
+              - not_null
+          
+          - name: club_location
+            description: "Location of the club where the class is held (e.g., 'Downtown', 'Uptown')"
+            tests:
+              - not_null
+             
       
       # --------------------------------------------------------
       # intructors TABLE
       # --------------------------------------------------------
-      - name: intructors
-        description: "Product catalog with dimensions"
-        
+      - name: instructors
+        description: "One row per instructor"
+        columns:
+          - name: instructor_id
+            description: "Unique identifier for each instructor"
+            tests:
+              - unique
+              - not_null
+
+          - name: instructor_name
+            description: "Name of the instructor (e.g., 'John Doe', 'Jane Smith')"
+            tests:
+              - not_null
+
+          - name: speciality
+            description: "Instructor's specialty or area of expertise"
+            tests:
+              - not_null
+            
+
+          - name: club_location   
+            description: "Location of the club where the instructor teaches (e.g., 'Downtown', 'Uptown')"
+            tests:
+              - not_null
+            
+          - name: hire_date
+            description: "Date when the instructor was hired"
+            tests:
+              - not_null                
       
       
       # --------------------------------------------------------
       # members TABLE
       # --------------------------------------------------------
       - name: members
-        description: "Portuguese to English category name mapping"
+        description: "One row per member_id"
+        columns:
+          - name: member_id
+            description: "Unique identifier for each member"
+            tests:
+              - unique
+              - not_null
+
+          - name: first_name
+            description: "First name of the member (e.g., 'Alice', 'Bob')"
+            tests:
+              - not_null
+          
+          - name: last_name
+            description: "Last name of the member (e.g., 'Smith', 'Johnson')"
+            tests:
+              - not_null
+
+          - name: email
+            description: "Email address of the member"
+            tests:
+              - unique 
+
+          - name: date_of_birth
+            description: "Date of birth of the member"
+            tests:
+              - not_null    
+
+          - name: join_date
+            description: "Date when the member joined the fitness club"
+            tests:
+              - not_null
+
+          - name: membership_status
+            description: "Current status of the member's membership (e.g., 'active', 'inactive', 'cancelled')"
+            tests:
+              - not_null
+             
+
+          - name: home_club 
+            description: "Location of the member's home club (e.g., 'Downtown', 'Uptown')"
+            tests:
+              - not_null
+                     
         
       
-
-
       # --------------------------------------------------------
       # membership_plans TABLE
       # --------------------------------------------------------
       - name: membership_plans
-        description: "Portuguese to English category name mapping"
+        description: "One row per membership_id/member_id"
+        columns:
+          - name: membership_id
+            description: "Unique identifier for each membership plan"
+            tests:
+              - not_null
+              - unique
+
+          - name: member_id
+            description: "Unique identifier for the member associated with the membership plan (foreign key to members)"
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('members')
+                  field: member_id    
+          
+          - name: plan_type
+            description: "Name of the membership plan (e.g., 'Basic', 'Premium')"
+            tests:
+              - not_null
+      
+
+          - name: monthly_price
+            description: "Price of the membership plan"
+            tests:
+              - not_null
+
+          - name: start_date
+            description: "Date when the membership plan starts"
+            tests:
+              - not_null
+
+          - name: end_date
+            description: "Date when the membership plan ends"
+       
+            
+          - name: is_active
+            description: "Whether the membership plan is currently active (true/false)"
+            tests:
+              - not_null 
         
     
