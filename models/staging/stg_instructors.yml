@@ -10,23 +10,51 @@ models:
           - unique
           - not_null
 
-      - name: instructor_name
-        description: "The instructor's full name."
+      - name: instructor_first_name
+        description: "The instructor's first name."
         tests:
-          - unique
+          - not_null 
+
+      - name: instructor_last_name
+        description: "The instructor's surname name."
+        tests:
           - not_null 
 
       - name: speciality
         description: "The instructor's specialist class."
         tests:
           - not_null 
+          - accepted_values:
+              arguments:
+                values: ['Muay Thai', 'Strength', 'Boxing', 'Pilates',]
 
       - name: club_location
         description: "Where the instructor teaches."
         tests:
           - not_null
+          - accepted_values:
+              arguments:
+                values: ['Bow', 'Stratford', 'Canary Wharf', 'Hackney']
 
       - name: hire_date
         description: "When the instructor was hired"
         tests:
           - not_null
+
+unit_tests:
+  - name: test_instructor_name_split
+    description: "Ensures the SQL correctly splits a full name into first and last names."
+    model: stg_instructors
+    given:
+      - input: source('fitness_dataset', 'instructors')
+        rows:
+          # Test Case 1: A standard two-word name
+          - {instructor_id: 1, instructor_name: 'Tom Jones'}
+          # Test Case 2: An edge case (someone with only one name)
+          - {instructor_id: 2, instructor_name: 'Bjork'}
+    expect:
+      rows:
+        # Expected Output 1: Should perfectly split
+        - {instructor_id: 1, instructor_first_name: 'Tom', instructor_last_name: 'Jones'}
+        # Expected Output 2: First name should be 'Bjork', last name should be null (thanks to safe_offset!)
+        - {instructor_id: 2, instructor_first_name: 'Bjork', instructor_last_name: null}
