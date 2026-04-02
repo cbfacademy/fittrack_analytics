@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  # testing the main table
+  - name: stg_class_categories
+    description: "category_id is tied to each category name. a 3 level hierarchy is defined"
+
+    columns:
+      - name: category_id
+        description: "unique identifier for each category"
+        tests:
+          - not_null
+          - unique
+
+      - name: category_name
+        description: "each category written in words"
+        tests:
+          - not_null
+          - accepted_values:
+                values: ['fitness', 'combat', 'wellness', 'strength', 'muay thai', 'boxing', 'yoga', 'pilates', 'hiit', 'mobility']
+
+      - name: category_level
+        description: "how far a category is from the top node, as in source data"
+        tests:
+          - not_null
+          - accepted_values:
+                values: [1, 2, 3]
+                quote: false
+
