@@ -1,0 +1,37 @@
+version: 2
+
+models:
+
+  - name: int_class_category_hierarchy
+    description: "3 level category hiearchy is defined"
+
+    columns:
+      - name: category_id
+        description: "unique identifier for each category"
+        tests:
+          - not_null
+          - unique
+
+      - name: category_name
+        description: "verbal name for each category"
+        tests:
+          - not_null
+
+      - name: top_level_category_id
+        description: "ID for the root category"
+        tests:
+          - not_null
+
+      - name: top_level_category_name
+        description: "verbal name for the root category"
+        tests:
+          - not_null
+
+      - name: category_level
+        description: "distance from the top level node. top level starts at 1"
+        tests:
+          - not_null
+          - accepted_values:
+                values: [1, 2, 3]
+                quote: false
+
