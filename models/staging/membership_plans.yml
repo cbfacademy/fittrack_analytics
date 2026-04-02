@@ -28,6 +28,10 @@ models:
         description: Monthly price of the membership plan.
         tests: 
           - not_null
+          - accepted_values:
+              arguments:
+                values: [30, 50]
+                quote: false
 
       - name: is_active
         description: Whether membership is currently active.
@@ -38,3 +42,6 @@ models:
         description: Membership start date.
         tests: 
           - not_null
+
+      - name: end_date 
+        description: Membership end date.
