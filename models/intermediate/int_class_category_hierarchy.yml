@@ -26,3 +26,103 @@ models:
                 values: [1, 2, 3]
                 quote: false
 
+unit_tests:  
+  - name: int_class_categories__handles_multiple_root_branches
+    model: int_class_category_hierarchy
+
+    given:
+      - input: ref('stg_class_categories')
+        rows:
+          - {category_id: 10, category_name: 'fitness', parent_category_id: null}
+          - {category_id: 11, category_name: 'strength', parent_category_id: 10}
+          - {category_id: 20, category_name: 'wellness', parent_category_id: null}
+          - {category_id: 21, category_name: 'yoga', parent_category_id: 20}
+
+    expect:
+      rows:
+        - {
+            category_id: 10,
+            category_name: 'fitness',
+            parent_category_id: null,
+            parent_category_name: null,
+            grandparent_category_id: null,
+            grandparent_category_name: null,
+            category_level: 1
+          }
+        - {
+            category_id: 11,
+            category_name: 'strength',
+            parent_category_id: 10,
+            parent_category_name: 'fitness',
+            grandparent_category_id: null,
+            grandparent_category_name: null,
+            category_level: 2
+          }
+        - {
+            category_id: 20,
+            category_name: 'wellness',
+            parent_category_id: null,
+            parent_category_name: null,
+            grandparent_category_id: null,
+            grandparent_category_name: null,
+            category_level: 1
+          }
+        - {
+            category_id: 21,
+            category_name: 'yoga',
+            parent_category_id: 20,
+            parent_category_name: 'wellness',
+            grandparent_category_id: null,
+            grandparent_category_name: null,
+            category_level: 2
+          }
+
+  - name: int_class_categories__maps_parent_grandparent_and_level
+    model: int_class_category_hierarchy
+
+    given:
+      - input: ref('stg_class_categories')
+        rows:
+          - {category_id: 1, category_name: 'fitness', parent_category_id: null}
+          - {category_id: 2, category_name: 'strength', parent_category_id: 1}
+          - {category_id: 3, category_name: 'powerlifting', parent_category_id: 2}
+          - {category_id: 4, category_name: 'wellness', parent_category_id: 1}
+
+    expect:
+      rows:
+        - {
+            category_id: 1,
+            category_name: 'fitness',
+            parent_category_id: null,
+            parent_category_name: null,
+            grandparent_category_id: null,
+            grandparent_category_name: null,
+            category_level: 1
+          }
+        - {
+            category_id: 2,
+            category_name: 'strength',
+            parent_category_id: 1,
+            parent_category_name: 'fitness',
+            grandparent_category_id: null,
+            grandparent_category_name: null,
+            category_level: 2
+          }
+        - {
+            category_id: 3,
+            category_name: 'powerlifting',
+            parent_category_id: 2,
+            parent_category_name: 'strength',
+            grandparent_category_id: 1,
+            grandparent_category_name: 'fitness',
+            category_level: 3
+          }
+        - {
+            category_id: 4,
+            category_name: 'wellness',
+            parent_category_id: 1,
+            parent_category_name: 'fitness',
+            grandparent_category_id: null,
+            grandparent_category_name: null,
+            category_level: 2
+          }
