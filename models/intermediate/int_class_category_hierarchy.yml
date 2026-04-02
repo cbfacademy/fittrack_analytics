@@ -17,15 +17,6 @@ models:
         tests:
           - not_null
 
-      - name: top_level_category_id
-        description: "ID for the root category"
-        tests:
-          - not_null
-
-      - name: top_level_category_name
-        description: "verbal name for the root category"
-        tests:
-          - not_null
 
       - name: category_level
         description: "distance from the top level node. top level starts at 1"

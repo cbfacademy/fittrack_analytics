@@ -23,18 +23,6 @@ SELECT
   t2.category_name AS parent_category_name,
   t3.category_name AS grandparent_category_name,
 
--- putting IDs and names together
-  CASE
-    WHEN t1.parent_category_id IS NULL THEN t1.category_id
-    WHEN t2.parent_category_id IS NULL THEN t1.parent_category_id
-    ELSE t2.parent_category_id
-  END AS top_level_category_id,
-
-  CASE
-    WHEN t1.parent_category_id IS NULL THEN t1.category_name
-    WHEN t2.parent_category_id IS NULL THEN t2.category_name
-    ELSE t3.category_name
-  END AS top_level_category_name,
 
 -- enforcing category level
   CASE
@@ -58,8 +46,6 @@ parent_category_id,
 parent_category_name,
 grandparent_category_id,
 grandparent_category_name,
-top_level_category_id,
-top_level_category_name,
 category_level
 
 FROM final
