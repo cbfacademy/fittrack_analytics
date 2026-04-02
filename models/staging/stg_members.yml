@@ -53,3 +53,19 @@ models:
           - accepted_values:
               arguments:
                 values: ['Bow', 'Canary Wharf', 'Hackney', 'Stratford']
+unit_tests:
+  - name: test_stg_members_missing_email_flag
+    model: stg_members
+    given:
+      - input: source('fitness_dataset', 'members')
+        rows:
+          - {member_id: 1, first_name: 'A', last_name: 'B', email: null, date_of_birth: '1990-01-01', join_date: '2024-01-01', membership_status: 'active', home_club: 'Bow'}
+          - {member_id: 2, first_name: 'A', last_name: 'B', email: '', date_of_birth: '1990-01-01', join_date: '2024-01-01', membership_status: 'active', home_club: 'Bow'}
+          - {member_id: 3, first_name: 'A', last_name: 'B', email: ' ', date_of_birth: '1990-01-01', join_date: '2024-01-01', membership_status: 'active', home_club: 'Bow'}
+          - {member_id: 4, first_name: 'A', last_name: 'B', email: 'test@email.com', date_of_birth: '1990-01-01', join_date: '2024-01-01', membership_status: 'active', home_club: 'Bow'}
+    expect:
+      rows:
+        - {member_id: 1, missing_email_flag: true}
+        - {member_id: 2, missing_email_flag: true}
+        - {member_id: 3, missing_email_flag: true}
+        - {member_id: 4, missing_email_flag: false}
