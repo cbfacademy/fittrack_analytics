@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: stg_classes
+    description: "Standardised schedule and details of individual fitness classes, including duration."
+    columns:
+      - name: class_id
+        description: "Primary key for the class."
+        tests:
+          - unique
+          - not_null
+
+      - name: instructor_id
+        description: "Foreign key linking to the instructor teaching the class."
+        tests:
+          - not_null
+
+      - name: category_id
+        description: "Foreign key linking to the broader class category."
+        tests:
+          - not_null
+
+      - name: class_name
+        description: "The cleaned name of the fitness class."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Boxing Basics', 'Boxing Conditioning', 'Evening Boxing', 'Express HIIT', 'Flow Yoga', 'HIIT Blast', 'Lunch Yoga', 'Mobility Reset', 'Morning Muay Thai', 'Morning Pilates', 'Muay Thai Advanced', 'Muay Thai Fundamentals', 'Pilates Core', 'Restore Yoga', 'Stretch & Recover']
+
+      - name: club_location
+        description: "The physical gym location where the class is held."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Bow', 'Stratford', 'Canary Wharf', 'Hackney']
+
+      - name: start_time
+        description: "The exact timestamp the class begins."
+        tests:
+          - not_null
+
+      - name: end_time
+        description: "The exact timestamp the class ends."
+        tests:
+          - not_null
+
+      - name: duration_minutes
+        description: "Calculated length of the class in minutes."
+        tests:
+          - not_null
