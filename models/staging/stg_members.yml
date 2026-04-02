@@ -13,9 +13,13 @@ models:
 
       - name: first_name
         description: "Trimmed first name."
+        tests:
+        - not_null
 
       - name: last_name
         description: "Trimmed last name."
+        tests:
+        - not_null
 
       - name: email
         description: "Trimmed email address. Missing emails are preserved as null."
@@ -35,9 +39,17 @@ models:
 
       - name: date_of_birth
         description: "Member date of birth."
+        tests:
+        - not_null
 
       - name: join_date
         description: "Date the member joined."
+        tests:
+        - not_null
 
       - name: home_club
         description: "Trimmed home club name."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Bow', 'Canary Wharf', 'Hackney', 'Stratford']
