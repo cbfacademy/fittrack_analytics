@@ -1,0 +1,49 @@
+version: 2 
+
+models: 
+  - name: stg_bookings
+    description: Cleaned staging model for bookings data.
+
+    columns:
+      - name: booking_id 
+        description: Primary key for the booking. 
+        tests: 
+          - not_null
+          - unique
+
+      - name: member_id
+        description: ID of the member who made the booking. 
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_members')
+                field: member_id
+
+      - name: class_id 
+        description: ID of the booked class. 
+        tests:
+          - not_null 
+          - relationships:
+              arguments:
+                to: ref('stg_class')
+                field: class_id
+
+      - name: booking_timestamp
+        description: Timestamp of when the booking was made. 
+        tests: 
+          - not_null 
+
+      - name: attendance_status
+        description: Standardised booking attendance status.
+        tests: 
+          - not_null 
+          - accepted_values: 
+              arguments:
+                values: ['attended', 'cancelled', 'no_show']
+              
+      - name: check_in_timestamp
+        description: Timestamp when the member checked in, if they attended.
+
+      - name: cancellation_timestamp
+        description: Timestamp when the booking was cancelled, if cancelled.
