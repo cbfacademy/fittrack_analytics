@@ -36,6 +36,15 @@ joined as (
 
 ),
 
+cleaned as (
+
+    select
+        *,
+        lower(trim(attendance_status)) as attendance_status_clean
+    from joined
+
+),
+
 final as (
 
     select
@@ -44,6 +53,7 @@ final as (
         class_id,
         booking_timestamp,
         attendance_status,
+        attendance_status_clean,
         check_in_timestamp,
         cancellation_timestamp,
         class_name,
@@ -54,29 +64,29 @@ final as (
         club_location,
 
         case
-            when lower(trim(attendance_status)) = 'attended' then true
+            when attendance_status_clean = 'attended' then true
             else false
         end as attended_flag,
 
         case
-            when lower(trim(attendance_status)) in ('missed', 'no_show', 'no show') then true
+            when attendance_status_clean in ('missed', 'no_show', 'no show') then true
             else false
         end as no_show_flag,
 
         case
-            when lower(trim(attendance_status)) = 'cancelled' then true
+            when attendance_status_clean = 'cancelled' then true
             else false
         end as cancelled_flag,
 
         case
-            when lower(trim(attendance_status)) = 'attended'
+            when attendance_status_clean = 'attended'
                 and check_in_timestamp is null
             then true
             else false
         end as attended_but_no_check_in_flag,
 
         case
-            when lower(trim(attendance_status)) = 'cancelled'
+            when attendance_status_clean = 'cancelled'
                 and cancellation_timestamp is not null
                 and scheduled_start is not null
                 and cancellation_timestamp > scheduled_start
@@ -92,7 +102,7 @@ final as (
             else false
         end as late_check_in_flag
 
-    from joined
+    from cleaned
 
 )
 
