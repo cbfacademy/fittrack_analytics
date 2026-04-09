@@ -32,7 +32,7 @@ models:
           - not_null
           - accepted_values:
               arguments:
-                values: ['Express Hiit', 'Hiit Blast', 'Boxing Basics', 'Boxing Conditioning', 'Evening Boxing', 'Express HIIT', 'Flow Yoga', 'HIIT Blast', 'Lunch Yoga', 'Mobility Reset', 'Morning Muay Thai', 'Morning Pilates', 'Muay Thai Advanced', 'Muay Thai Fundamentals', 'Pilates Core', 'Restore Yoga', 'Stretch & Recover']
+                values: ['Express Hiit', 'Hiit Blast', 'Boxing Basics', 'Boxing Conditioning', 'Evening Boxing', 'Flow Yoga', 'Lunch Yoga', 'Mobility Reset', 'Morning Muay Thai', 'Morning Pilates', 'Muay Thai Advanced', 'Muay Thai Fundamentals', 'Pilates Core', 'Restore Yoga', 'Stretch & Recover']
 
       - name: club_location
         description: "The physical gym location where the class is held."
