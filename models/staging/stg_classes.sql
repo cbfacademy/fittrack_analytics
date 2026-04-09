@@ -5,13 +5,13 @@ with source as (
 staged as (
     select
         
-        cast(class_id as string) as class_id,
+        cast(class_id as integer) as class_id,
         
-        cast(instructor_id as string) as instructor_id,
+        cast(instructor_id as integer) as instructor_id,
         
-        cast(category_id as string) as category_id,
+        cast(category_id as integer) as category_id,
 
-        trim(class_name) as class_name,
+        initcap(trim(class_name)) as class_name,
 
         trim(club_location) as club_location,
         
