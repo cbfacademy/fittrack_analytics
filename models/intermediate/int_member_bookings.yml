@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: int_member_bookings
+    description: "Intermediate model joining bookings to members at booking grain."
+
+    columns:
+      - name: booking_id
+        description: "Unique identifier for each booking."
+        tests:
+          - not_null
+          - unique
+
+      - name: member_id
+        description: "Unique identifier for the member linked to the booking."
+        tests:
+          - not_null
+
+      - name: class_id
+        description: "Unique identifier for the class linked to the booking."
+        tests:
+          - not_null
+
+      - name: booking_timestamp
+        description: "Timestamp when the booking was made."
+        tests:
+          - not_null
+
+      - name: attendance_status
+        description: "Attendance status recorded for the booking."
+        tests:
+          - not_null
+
+      - name: check_in_timestamp
+        description: "Timestamp when the member checked in for the class, if applicable."
+
+      - name: cancellation_timestamp
+        description: "Timestamp when the booking was cancelled, if applicable."
+
+      - name: first_name
+        description: "Member first name."
+
+      - name: last_name
+        description: "Member last name."
+
+      - name: email
+        description: "Member email address."
+
+      - name: missing_email_flag
+        description: "True when the member email is missing or blank."
+
+      - name: date_of_birth
+        description: "Member date of birth."
+
+      - name: join_date
+        description: "Date the member joined."
+
+      - name: membership_status
+        description: "Standardised membership status from stg_members."
+
+      - name: home_club
+        description: "Member home club."
