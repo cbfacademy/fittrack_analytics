@@ -1,0 +1,83 @@
+version: 2
+
+models:
+  - name: stg_classes
+    description: "Standardised schedule and details of individual fitness classes, including duration."
+    columns:
+      - name: class_id
+        description: "Primary key for the class."
+        tests:
+          - unique
+          - not_null
+
+      - name: instructor_id
+        description: "Foreign key linking to the instructor teaching the class."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_instructors')
+              field: instructor_id
+
+      - name: category_id
+        description: "Foreign key linking to the broader class category."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_class_categories')
+              field: category_id
+
+      - name: class_name
+        description: "The cleaned name of the fitness class."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Express Hiit', 'Hiit Blast', 'Boxing Basics', 'Boxing Conditioning', 'Evening Boxing', 'Flow Yoga', 'Lunch Yoga', 'Mobility Reset', 'Morning Muay Thai', 'Morning Pilates', 'Muay Thai Advanced', 'Muay Thai Fundamentals', 'Pilates Core', 'Restore Yoga', 'Stretch & Recover']
+
+      - name: club_location
+        description: "The physical gym location where the class is held."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Bow', 'Stratford', 'Canary Wharf', 'Hackney']
+
+      - name: start_time
+        description: "The exact timestamp the class begins."
+        tests:
+          - not_null
+
+      - name: end_time
+        description: "The exact timestamp the class ends."
+        tests:
+          - not_null
+
+      - name: duration_minutes
+        description: "Calculated length of the class in minutes."
+        tests:
+          - not_null
+          - accepted_values:
+              quote: false
+              arguments:
+                values: [15, 30, 45, 60, 75, 90]
+
+unit_tests:
+  - name: test_stg_classes_transformations
+    description: "Ensures duration math is correct and messy strings are properly cleaned."
+    model: stg_classes
+    given:
+      - input: source('fitness_dataset', 'classes')
+        rows:
+          # Test Case 1: Duration math (45 mins) and standard clean strings
+          - {class_id: 1, class_name: 'Flow Yoga', club_location: 'Bow', scheduled_start: '2024-01-01 10:00:00', scheduled_end: '2024-01-01 10:45:00'}
+          
+          # Test Case 2: 60 min duration + extremely messy strings (weird capitalization and extra spaces)
+          - {class_id: 2, class_name: '   mOrNiNg pIlAtEs  ', club_location: '  Hackney  ', scheduled_start: '2024-01-01 09:00:00', scheduled_end: '2024-01-01 10:00:00'}
+          
+    expect:
+      rows:
+        # Expected Output 1: 45 minutes, strings remain untouched
+        - {class_id: 1, duration_minutes: 45, class_name: 'Flow Yoga', club_location: 'Bow'}
+        
+        # Expected Output 2: 60 minutes, strings perfectly trimmed and capitalized
+        - {class_id: 2, duration_minutes: 60, class_name: 'Morning Pilates', club_location: 'Hackney'}

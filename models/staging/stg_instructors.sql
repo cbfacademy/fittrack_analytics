@@ -4,7 +4,7 @@ with source as (
 
 staged as (
     select
-        cast(instructor_id as string) as instructor_id,
+        cast(instructor_id as integer) as instructor_id,
 
         split(trim(instructor_name), ' ')[safe_offset(0)] as instructor_first_name,
 
