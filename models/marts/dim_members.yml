@@ -1,0 +1,57 @@
+version: 2
+
+models: 
+  - name: dim_members
+    description: Final member dimension with one row per member and cleaned descriptive attributes.
+
+    columns: 
+      - name: member_id
+        description: Unique identifier for each member.
+        tests:
+          - not_null
+          - unique
+
+      - name: first_name
+        description: Members first name.
+        tests:
+          - not_null
+
+      - name: last_name
+        description: Members last name.
+        tests:
+          - not_null
+
+      - name: email
+        description: Members email address, null if missing. 
+
+      - name: missing_email_flag
+        description: Flag indicating whether the member is missing an email address. 
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [true, false]
+                quote: false
+
+      - name: date_of_birth
+        description: Members date of birth.
+        tests: 
+          - not_null
+
+      - name: join_date
+        description: Date the member joined.
+        tests: 
+          - not_null
+
+      - name: membership_status
+        description: Cleaned membership status. 
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['active', 'inactive', 'unknown']
+
+      - name: home_club
+        description: Location of members home club.
+        tests:
+          - not_null
