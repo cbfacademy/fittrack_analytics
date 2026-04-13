@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: dim_instructors
+    description: "Final instructor dimension with one row per instructor."
+
+    columns:
+      - name: instructor_id
+        description: "Unique identifier for each instructor."
+        tests:
+          - not_null
+          - unique
+
+      - name: instructor_first_name
+        description: "Instructor first name."
+        tests:
+          - not_null
+
+      - name: instructor_last_name
+        description: "Instructor last name."
+        tests:
+          - not_null
+
+      - name: instructor_name
+        description: "Full instructor name."
+        tests:
+          - not_null
+
+      - name: speciality
+        description: "Instructor speciality."
+        tests:
+          - not_null
+
+      - name: club_location
+        description: "Instructor club location."
+        tests:
+          - not_null
