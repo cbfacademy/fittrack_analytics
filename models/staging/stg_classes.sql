@@ -11,6 +11,8 @@ staged as (
         
         cast(category_id as integer) as category_id,
 
+        cast(capacity as integer) as capacity,
+
         initcap(trim(class_name)) as class_name,
 
         trim(club_location) as club_location,

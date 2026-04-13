@@ -1,0 +1,90 @@
+version: 2
+
+models:
+  - name: dim_classes
+    description: "Final class dimension table containing denormalized hierarchy and instructor details."
+    columns:
+      - name: class_id
+        description: "Primary key for the class."
+        tests:
+          - unique
+          - not_null
+
+      - name: class_name
+        description: "Cleaned name of the fitness class."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+               values: ['Express Hiit', 'Hiit Blast', 'Boxing Basics', 'Boxing Conditioning', 'Evening Boxing', 'Flow Yoga', 'Lunch Yoga', 'Mobility Reset', 'Morning Muay Thai', 'Morning Pilates', 'Muay Thai Advanced', 'Muay Thai Fundamentals', 'Pilates Core', 'Restore Yoga', 'Stretch & Recover']
+
+      - name: instructor_name
+        description: "Full name of the instructor (First + Last)."
+        tests:
+          - not_null
+
+      - name: category_name
+        description: "The specific category of the class."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+               values: ['Fitness', 'Combat', 'Wellness', 'Strength', 'Muay Thai', 'Boxing', 'Yoga', 'Pilates', 'Hiit', 'Mobility']
+
+      - name: top_level_category
+        description: "The highest level grouping for the class category (e.g., Fitness, Wellness)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+               values: ['Fitness', 'Combat', 'Wellness', 'Strength']
+
+      - name: club_location
+        description: "The physical gym location."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+               values: ['Bow', 'Stratford', 'Canary Wharf', 'Hackney']
+
+      - name: duration_minutes
+        description: "Calculated length of the class in minutes."
+        tests:
+          - not_null
+          - accepted_values:
+             arguments:
+              quote: false
+              values: [15, 30, 45, 60, 75, 90] 
+
+unit_tests:
+  - name: test_dim_classes_hierarchy_coalesce
+    description: "Ensures the top_level_category correctly falls back up the hierarchy chain using real category names."
+    model: dim_classes
+    given:
+      - input: ref('stg_classes')
+        rows:
+          - {class_id: 1, class_name: 'Morning Muay Thai', category_id: 100, instructor_id: 1, capacity: 30}
+          - {class_id: 2, class_name: 'Pilates Core', category_id: 200, instructor_id: 1, capacity: 20}
+          - {class_id: 3, class_name: 'Heavy Lifting', category_id: 300, instructor_id: 1, capacity: 25}
+
+      - input: ref('stg_instructors')
+        rows:
+          - {instructor_id: 1, instructor_first_name: 'John', instructor_last_name: 'Doe'}
+
+      - input: ref('int_class_category_hierarchy')
+        rows:
+          # Case 1: Full hierarchy exists (Combat -> Boxing -> Muay Thai)
+          - {category_id: 100, category_name: 'Muay Thai', parent_category_name: 'Boxing', grandparent_category_name: 'Combat'}
+          # Case 2: No grandparent (Wellness -> Pilates)
+          - {category_id: 200, category_name: 'Pilates', parent_category_name: 'Wellness', grandparent_category_name: null}
+          # Case 3: No parent or grandparent (Standalone Strength)
+          - {category_id: 300, category_name: 'Strength', parent_category_name: null, grandparent_category_name: null}
+
+    expect:
+      rows:
+        # Expected 1: Grabs grandparent 'combat'
+        - {class_id: 1, category_name: 'Muay Thai', parent_category_name: 'Boxing', top_level_category: 'Combat'}
+        # Expected 2: Falls back to parent 'wellness'
+        - {class_id: 2, category_name: 'Pilates', parent_category_name: 'Wellness', top_level_category: 'Wellness'}
+        # Expected 3: Falls back to base category 'strength'
+        - {class_id: 3, category_name: 'Strength', parent_category_name: 'Strength', top_level_category: 'Strength'}
