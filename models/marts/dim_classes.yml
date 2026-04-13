@@ -16,7 +16,7 @@ models:
           - not_null
           - accepted_values:
               arguments:
-                values: ['Express Hiit', 'Hiit Blast', 'Boxing Basics', 'Boxing Conditioning', 'Evening Boxing', 'Flow Yoga', 'Lunch Yoga', 'Mobility Reset', 'Morning Muay Thai', 'Morning Pilates', 'Muay Thai Advanced', 'Muay Thai Fundamentals', 'Pilates Core', 'Restore Yoga', 'Stretch & Recover']
+               values: ['Express Hiit', 'Hiit Blast', 'Boxing Basics', 'Boxing Conditioning', 'Evening Boxing', 'Flow Yoga', 'Lunch Yoga', 'Mobility Reset', 'Morning Muay Thai', 'Morning Pilates', 'Muay Thai Advanced', 'Muay Thai Fundamentals', 'Pilates Core', 'Restore Yoga', 'Stretch & Recover']
 
       - name: instructor_name
         description: "Full name of the instructor (First + Last)."
@@ -29,7 +29,7 @@ models:
           - not_null
           - accepted_values:
               arguments:
-              values: ['Fitness', 'Combat', 'Wellness', 'Strength', 'Muay Thai', 'Boxing', 'Yoga', 'Pilates', 'Hiit', 'Mobility']
+               values: ['Fitness', 'Combat', 'Wellness', 'Strength', 'Muay Thai', 'Boxing', 'Yoga', 'Pilates', 'Hiit', 'Mobility']
 
       - name: top_level_category
         description: "The highest level grouping for the class category (e.g., Fitness, Wellness)."
@@ -37,7 +37,7 @@ models:
           - not_null
           - accepted_values:
               arguments:
-              values: ['Fitness', 'Combat', 'Wellness', 'Strength']
+               values: ['Fitness', 'Combat', 'Wellness', 'Strength']
 
       - name: club_location
         description: "The physical gym location."
@@ -45,14 +45,14 @@ models:
           - not_null
           - accepted_values:
               arguments:
-              values: ['Bow', 'Stratford', 'Canary Wharf', 'Hackney']
+               values: ['Bow', 'Stratford', 'Canary Wharf', 'Hackney']
 
       - name: duration_minutes
         description: "Calculated length of the class in minutes."
         tests:
           - not_null
           - accepted_values:
-              arguments:
+             arguments:
               quote: false
               values: [15, 30, 45, 60, 75, 90] 
 
