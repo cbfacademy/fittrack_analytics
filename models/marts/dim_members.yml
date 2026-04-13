@@ -55,3 +55,6 @@ models:
         description: Location of members home club.
         tests:
           - not_null
+          - accepted_values:
+              arguments:
+                values: ['Bow', 'Canary Wharf', 'Hackney', 'Stratford']
