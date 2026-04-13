@@ -1,0 +1,78 @@
+version: 2
+
+models:
+  - name: fact_bookings
+    description: Final fact table for class bookings with one row per booking.
+
+    columns:
+      - name: booking_id
+        description: Unique identifier for each booking.
+        tests:
+          - not_null
+          - unique
+
+      - name: member_id
+        description: Identifier for the member who made the booking.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_members')
+                field: member_id
+
+      - name: class_id
+        description: Identifier for the class that was booked. 
+        tests:
+          - not_null
+
+      - name: booking_timestamp
+        description: Timestamp of when the booking was made.
+        tests:
+          - not_null
+
+      - name: booking_date
+        description: Date when the booking was made.
+        tests:
+          - not_null
+
+      - name: attendance_status
+        description: Cleaned attendance status for the booking.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['attended', 'cancelled', 'no_show']
+
+      - name: is_attended
+        description: Flag indicating whether the booking was attended. 
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [true, false]
+                quote: false
+
+      - name: is_cancelled
+        description: Flag indicating whether the booking was cancelled. 
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [true, false]
+                quote: false
+
+      - name: is_no_show
+        description: Flag indicating whether the booking was a no-show.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [true, false]
+                quote: false
+
+      - name: check_in_timestamp
+        description: Timestamp when the member checked in, if they attended. 
+
+      - name: cancellation_timestamp
+        description: Timestamp when the booking was cancelled, if cancelled.
+
