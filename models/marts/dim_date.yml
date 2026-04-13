@@ -1,0 +1,118 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: Date dimension table with one row per day and useful calendar attributes.
+
+    columns:
+      - name: date_day
+        description: The calendar date.
+        tests:
+          - not_null
+          - unique
+
+      - name: day_of_week
+        description: Day of week number where 1 = Sunday and 7 = Saturday.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5, 6, 7]
+              quote: false
+
+      - name: day_of_week_name
+        description: Name of the day of the week.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+      - name: is_weekend
+        description: True when the date falls on Saturday or Sunday.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [True, False]
+              quote: false
+
+      - name: day_of_month
+        description: Day number within the month.
+        tests:
+          - not_null
+
+      - name: day_of_year
+        description: Day number within the year.
+        tests:
+          - not_null
+
+      - name: week_start_date
+        description: Start date of the week.
+        tests:
+          - not_null
+
+      - name: week_end_date
+        description: End date of the week.
+        tests:
+          - not_null
+
+      - name: week_of_year
+        description: Week number within the year.
+        tests:
+          - not_null
+
+      - name: month_name
+        description: Name of the month.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+      - name: month_of_year
+        description: Month number within the year.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+              quote: false
+
+      - name: month_start_date
+        description: First date of the month.
+        tests:
+          - not_null
+
+      - name: month_end_date
+        description: Last date of the month.
+        tests:
+          - not_null
+
+      - name: quarter_of_year
+        description: Quarter number within the year.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4]
+              quote: false
+
+      - name: quarter_start_date
+        description: First date of the quarter.
+        tests:
+          - not_null
+
+      - name: quarter_end_date
+        description: Last date of the quarter.
+        tests:
+          - not_null
+
+      - name: year_number
+        description: Calendar year.
+        tests:
+          - not_null
+
+      - name: year_start_date
+        description: First date of the year.
+        tests:
+          - not_null
+
+      - name: year_end_date
+        description: Last date of the year.
+        tests:
+          - not_null
