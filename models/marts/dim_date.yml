@@ -31,7 +31,7 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: [True, False]
+              values: [true, false]
               quote: false
 
       - name: day_of_month
