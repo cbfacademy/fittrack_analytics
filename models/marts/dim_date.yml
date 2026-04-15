@@ -5,6 +5,12 @@ models:
     description: Date dimension table with one row per day and useful calendar attributes.
 
     columns:
+      - name: date_key
+        description: Integer date key in YYYYMMDD format.
+        tests:
+          - not_null
+          - unique
+
       - name: date_day
         description: The calendar date.
         tests:
@@ -44,18 +50,23 @@ models:
         tests:
           - not_null
 
+      - name: iso_year
+        description: ISO week-numbering year.
+        tests:
+          - not_null
+
+      - name: iso_week_of_year
+        description: ISO week number within the ISO year.
+        tests:
+          - not_null
+
       - name: week_start_date
-        description: Start date of the week.
+        description: Start date of the ISO week, beginning on Monday.
         tests:
           - not_null
 
       - name: week_end_date
-        description: End date of the week.
-        tests:
-          - not_null
-
-      - name: week_of_year
-        description: Week number within the year.
+        description: End date of the ISO week, ending on Sunday.
         tests:
           - not_null
 
