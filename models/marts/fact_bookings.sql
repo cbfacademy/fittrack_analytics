@@ -1,6 +1,13 @@
 with bookings as (
 
-    select *
+    select
+        booking_id,
+        member_id,
+        class_id,
+        booking_timestamp,
+        attendance_status,
+        check_in_timestamp,
+        cancellation_timestamp
     from {{ ref('stg_bookings') }}
 
 ),
