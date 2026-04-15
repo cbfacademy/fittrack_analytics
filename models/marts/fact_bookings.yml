@@ -87,7 +87,7 @@ unit_tests:
           - {booking_id: 1, member_id: 101, class_id: 1001, booking_timestamp: '2025-01-10 09:00:00', attendance_status: 'attended', check_in_timestamp: '2025-01-10 09:55:00', cancellation_timestamp: null}
           - {booking_id: 2, member_id: 102, class_id: 1002, booking_timestamp: '2025-01-11 10:00:00', attendance_status: 'cancelled', check_in_timestamp: null, cancellation_timestamp: '2025-01-10 15:00:00'}
           - {booking_id: 3, member_id: 103, class_id: 1003, booking_timestamp: '2025-01-12 11:00:00', attendance_status: 'no_show', check_in_timestamp: null, cancellation_timestamp: null}
-          - {booking_id: 4, member_id: 104, class_id: 1004, booking_timestamp: '2025-01-13 12:00:00', attendance_status: null, check_in_timestamp:null, cancellation_timestamp: null}
+          - {booking_id: 4, member_id: 104, class_id: 1004, booking_timestamp: '2025-01-13 12:00:00', attendance_status: null, check_in_timestamp: null, cancellation_timestamp: null}
 
     expect:
       rows:
